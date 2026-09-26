@@ -32,7 +32,7 @@ try:
     host = SUPABASE_URL.replace("https://", "").replace("http://", "")
     host = host.split("/")[0]
 
-    ip = socket.gethostbyname(host)
+    ip = socket.getaddrinfo(host, 443)
 
     st.success("DNS funcionando")
     st.code(f"{host} → {ip}")
