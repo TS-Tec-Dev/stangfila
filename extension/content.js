@@ -1,8 +1,8 @@
 // ===============================
 // CONFIGURE AQUI
 // ===============================
-const SUPABASE_URL = "https://SEU-PROJETO.supabase.co";
-const SUPABASE_ANON_KEY = "COLE_AQUI_SUA_ANON_KEY";
+const SUPABASE_URL = "https://lfirwpdqferlbfmyuhym.supabase.co";
+const SUPABASE_ANON_KEY = "sb_secret_O-3oVvCfkLGORddzoIzsgQ_7siaIuHg";
 
 // Tela inicial informada pelo usuário.
 const HOME_PATH = "/home/outros/modo_auto_atendimento";
