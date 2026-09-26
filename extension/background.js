@@ -1,6 +1,5 @@
-const STATUS_URL =
-  "https://raw.githubusercontent.com/TS-Tec-Dev/stangfila/main/status.json";
-
+const API_URL =
+  "https://api.github.com/repos/TS-Tec-Dev/stangfila/contents/status.json?ref=main";
 
 chrome.runtime.onMessage.addListener(
   (mensagem, sender, sendResponse) => {
@@ -11,25 +10,18 @@ chrome.runtime.onMessage.addListener(
 
     buscarStatus()
       .then((dados) => {
-
         sendResponse({
           sucesso: true,
           dados: dados
         });
-
       })
       .catch((erro) => {
-
-        console.error(
-          "Erro ao buscar status:",
-          erro
-        );
+        console.error("STANG FILAS:", erro);
 
         sendResponse({
           sucesso: false,
-          erro: erro.toString()
+          erro: String(erro)
         });
-
       });
 
     return true;
@@ -39,25 +31,48 @@ chrome.runtime.onMessage.addListener(
 
 async function buscarStatus() {
 
-  const url =
-    STATUS_URL +
-    "?t=" +
-    Date.now();
-
   const resposta = await fetch(
-    url,
+    API_URL + "&t=" + Date.now(),
     {
-      cache: "no-store"
+      method: "GET",
+      cache: "no-store",
+      headers: {
+        "Accept": "application/vnd.github+json"
+      }
     }
   );
 
   if (!resposta.ok) {
-
     throw new Error(
-      "HTTP " + resposta.status
+      "GitHub respondeu HTTP " +
+      resposta.status
     );
-
   }
 
-  return await resposta.json();
+  const arquivo = await resposta.json();
+
+  if (!arquivo.content) {
+    throw new Error(
+      "status.json sem conteúdo"
+    );
+  }
+
+  // O GitHub devolve o arquivo em Base64.
+  const base64 =
+    arquivo.content.replace(/\n/g, "");
+
+  const texto =
+    decodeURIComponent(
+      escape(atob(base64))
+    );
+
+  const dados =
+    JSON.parse(texto);
+
+  console.log(
+    "STANG FILAS - STATUS RECEBIDO:",
+    dados
+  );
+
+  return dados;
 }
