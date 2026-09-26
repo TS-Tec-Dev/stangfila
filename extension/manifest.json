@@ -3,7 +3,7 @@
 
   "name": "Stang - Controle de Filas do Totem",
 
-  "version": "1.3.0",
+  "version": "1.4.0",
 
   "description": "Exibe no totem o status das filas de carga e descarga.",
 
@@ -24,6 +24,6 @@
   ],
 
   "host_permissions": [
-    "https://api.github.com/*"
+    "https://raw.githubusercontent.com/*"
   ]
 }
