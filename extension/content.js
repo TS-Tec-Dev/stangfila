@@ -228,8 +228,8 @@ function criarAviso(
         line-height:1.4;
       "
     >
-      PROCURE A PORTARIA<br>
-      PARA MAIS INFORMAÇÕES
+      PROCURE MAIS INFORMAÇÕES<br>
+      PROCURE SUA DISTRIBUIDORA
     </div>
 
   `;
