@@ -1,19 +1,34 @@
-const STATUS_URL =
-  "https://raw.githubusercontent.com/TS-Tec-Dev/stangfila/main/status.json";
+let painelAtual = null;
 
-const HOME_PATH = "/home/outros/modo_auto_atendimento";
+let cargaAnterior = null;
+let descargaAnterior = null;
 
-let avisoAtual = null;
-let ultimaCarga = null;
-let ultimaDescarga = null;
+let ocultadoPeloClique = false;
 
 
 // ============================================================
-// VERIFICA SE ESTAMOS NA TELA INICIAL
+// IDENTIFICA A TELA INICIAL
 // ============================================================
 
 function estaNaTelaInicial() {
-  return window.location.pathname === HOME_PATH;
+
+  const texto =
+    (document.body?.innerText || "")
+      .toUpperCase();
+
+  const temInicio =
+    texto.includes("INÍCIO");
+
+  const temAtendimento =
+    texto.includes("COMEÇAR ATENDIMENTO");
+
+  const temBiometria =
+    texto.includes("CADASTRAR BIOMETRIA FACIAL");
+
+  return (
+    temInicio &&
+    (temAtendimento || temBiometria)
+  );
 }
 
 
@@ -22,170 +37,17 @@ function estaNaTelaInicial() {
 // ============================================================
 
 function removerAviso() {
-  const aviso = document.getElementById("stang-aviso-fila");
 
-  if (aviso) {
-    aviso.remove();
+  const existente =
+    document.getElementById(
+      "stang-aviso-fila"
+    );
+
+  if (existente) {
+    existente.remove();
   }
 
-  avisoAtual = null;
-}
-
-
-// ============================================================
-// MONTA AVISO
-// ============================================================
-
-function criarAviso(cargaAberta, descargaAberta, dataReferencia) {
-
-  removerAviso();
-
-  // Se ambas estiverem abertas, não mostra nada.
-  if (cargaAberta && descargaAberta) {
-    return;
-  }
-
-  const painel = document.createElement("div");
-  painel.id = "stang-aviso-fila";
-
-  let titulo = "";
-  let subtitulo = "";
-
-  if (!cargaAberta && !descargaAberta) {
-
-    titulo = "ATENDIMENTO ENCERRADO";
-    subtitulo = "FILAS DE CARGA E DESCARGA ENCERRADAS";
-
-  } else if (!cargaAberta) {
-
-    titulo = "ATENÇÃO";
-    subtitulo = "FILA DE CARGA ENCERRADA";
-
-  } else if (!descargaAberta) {
-
-    titulo = "ATENÇÃO";
-    subtitulo = "FILA DE DESCARGA ENCERRADA";
-
-  }
-
-
-  const dataFormatada = formatarData(dataReferencia);
-
-
-  painel.innerHTML = `
-    <div style="
-      font-size: 46px;
-      margin-bottom: 12px;
-    ">
-      ⛔
-    </div>
-
-    <div style="
-      font-size: 22px;
-      font-weight: 800;
-      margin-bottom: 18px;
-      color: #ffffff;
-      text-align: center;
-    ">
-      ${titulo}
-    </div>
-
-    <div style="
-      font-size: 25px;
-      line-height: 1.25;
-      font-weight: 900;
-      text-align: center;
-      color: #ffeb3b;
-      margin-bottom: 20px;
-    ">
-      ${subtitulo}
-    </div>
-
-    <div style="
-      font-size: 21px;
-      font-weight: 700;
-      text-align: center;
-      margin-bottom: 20px;
-    ">
-      ${dataFormatada}
-    </div>
-
-    <div style="
-      font-size: 16px;
-      line-height: 1.5;
-      text-align: center;
-      color: #ffffff;
-    ">
-      Não serão aceitas novas entradas para esta fila no dia de hoje.
-    </div>
-
-    <div style="
-      margin-top: 22px;
-      padding: 12px;
-      border-top: 1px solid rgba(255,255,255,.35);
-      font-size: 15px;
-      line-height: 1.4;
-      text-align: center;
-      font-weight: 700;
-      color: white;
-    ">
-      PROCURE A PORTARIA<br>
-      PARA MAIS INFORMAÇÕES
-    </div>
-  `;
-
-
-  // ==========================================================
-  // POSIÇÃO EXATAMENTE NA LATERAL ESQUERDA
-  // ==========================================================
-
-  Object.assign(painel.style, {
-
-    position: "fixed",
-
-    left: "20px",
-
-    top: "90px",
-
-    width: "315px",
-
-    minHeight: "390px",
-
-    padding: "28px 22px",
-
-    background:
-      "linear-gradient(160deg, #b71c1c 0%, #7f0000 100%)",
-
-    color: "white",
-
-    borderRadius: "16px",
-
-    border: "2px solid #ff5252",
-
-    boxShadow:
-      "0 15px 40px rgba(0,0,0,.55)",
-
-    zIndex: "2147483647",
-
-    fontFamily:
-      "Arial, Helvetica, sans-serif",
-
-    display: "flex",
-
-    flexDirection: "column",
-
-    justifyContent: "center",
-
-    alignItems: "center",
-
-    pointerEvents: "none"
-
-  });
-
-
-  document.body.appendChild(painel);
-
-  avisoAtual = painel;
+  painelAtual = null;
 }
 
 
@@ -199,185 +61,518 @@ function formatarData(data) {
     return "";
   }
 
-  try {
+  const partes = data.split("-");
 
-    const partes = data.split("-");
+  if (partes.length === 3) {
 
-    if (partes.length === 3) {
+    return (
+      partes[2] +
+      "/" +
+      partes[1] +
+      "/" +
+      partes[0]
+    );
 
-      return `${partes[2]}/${partes[1]}/${partes[0]}`;
-
-    }
-
-  } catch (e) {}
+  }
 
   return data;
 }
 
 
 // ============================================================
-// CONSULTA STATUS NO GITHUB
+// CRIA AVISO
 // ============================================================
 
-async function consultarStatus() {
+function criarAviso(
+  cargaAberta,
+  descargaAberta,
+  dataReferencia
+) {
 
-  // Se saiu da tela inicial, retira imediatamente.
-  if (!estaNaTelaInicial()) {
-    removerAviso();
+  removerAviso();
+
+
+  if (
+    cargaAberta &&
+    descargaAberta
+  ) {
     return;
   }
 
-  try {
 
-    // Evita cache do GitHub Raw.
-    const url =
-      STATUS_URL +
-      "?t=" +
-      new Date().getTime();
-
-    const resposta = await fetch(
-      url,
-      {
-        cache: "no-store"
-      }
-    );
-
-    if (!resposta.ok) {
-      return;
-    }
-
-    const dados = await resposta.json();
+  let titulo = "";
+  let fila = "";
+  let mensagem = "";
 
 
-    const cargaAberta =
-      dados.carga_aberta !== false;
+  if (
+    !cargaAberta &&
+    !descargaAberta
+  ) {
 
-    const descargaAberta =
-      dados.descarga_aberta !== false;
+    titulo =
+      "ATENDIMENTO ENCERRADO";
 
+    fila =
+      "FILAS DE CARGA E DESCARGA ENCERRADAS";
 
-    // Não precisa recriar a mensagem se não mudou.
-    if (
-      cargaAberta === ultimaCarga &&
-      descargaAberta === ultimaDescarga &&
-      avisoAtual
-    ) {
-      return;
-    }
-
-
-    ultimaCarga = cargaAberta;
-    ultimaDescarga = descargaAberta;
-
-
-    criarAviso(
-      cargaAberta,
-      descargaAberta,
-      dados.data_referencia
-    );
-
-  } catch (erro) {
-
-    console.log(
-      "Erro ao consultar status da fila:",
-      erro
-    );
+    mensagem =
+      "Não serão aceitas novas entradas para carga ou descarga no dia de hoje.";
 
   }
+
+  else if (!cargaAberta) {
+
+    titulo = "ATENÇÃO";
+
+    fila =
+      "FILA DE CARGA ENCERRADA";
+
+    mensagem =
+      "Não serão aceitas novas entradas para carga no dia de hoje.";
+
+  }
+
+  else {
+
+    titulo = "ATENÇÃO";
+
+    fila =
+      "FILA DE DESCARGA ENCERRADA";
+
+    mensagem =
+      "Não serão aceitas novas entradas para descarga no dia de hoje.";
+
+  }
+
+
+  const data =
+    formatarData(
+      dataReferencia
+    );
+
+
+  const painel =
+    document.createElement("div");
+
+  painel.id =
+    "stang-aviso-fila";
+
+
+  painel.innerHTML = `
+
+    <div
+      style="
+        font-size:52px;
+        margin-bottom:12px;
+      "
+    >
+      ⛔
+    </div>
+
+    <div
+      style="
+        font-size:21px;
+        font-weight:800;
+        text-align:center;
+        margin-bottom:16px;
+      "
+    >
+      ${titulo}
+    </div>
+
+    <div
+      style="
+        font-size:25px;
+        line-height:1.25;
+        font-weight:900;
+        text-align:center;
+        color:#ffeb3b;
+        margin-bottom:20px;
+      "
+    >
+      ${fila}
+    </div>
+
+    <div
+      style="
+        font-size:22px;
+        font-weight:bold;
+        margin-bottom:20px;
+      "
+    >
+      ${data}
+    </div>
+
+    <div
+      style="
+        font-size:16px;
+        line-height:1.45;
+        text-align:center;
+      "
+    >
+      ${mensagem}
+    </div>
+
+    <div
+      style="
+        width:80%;
+        margin-top:25px;
+        padding-top:18px;
+        border-top:
+          1px solid
+          rgba(255,255,255,.4);
+        text-align:center;
+        font-size:15px;
+        font-weight:bold;
+        line-height:1.4;
+      "
+    >
+      PROCURE A PORTARIA<br>
+      PARA MAIS INFORMAÇÕES
+    </div>
+
+  `;
+
+
+  Object.assign(
+    painel.style,
+    {
+
+      position: "fixed",
+
+      left: "18px",
+
+      top: "50%",
+
+      transform:
+        "translateY(-50%)",
+
+      width: "300px",
+
+      minHeight: "390px",
+
+      boxSizing:
+        "border-box",
+
+      padding:
+        "28px 20px",
+
+      background:
+        "linear-gradient(160deg,#c62828,#7f0000)",
+
+      border:
+        "3px solid #ff5252",
+
+      borderRadius:
+        "18px",
+
+      boxShadow:
+        "0 10px 35px rgba(0,0,0,.75)",
+
+      color:
+        "#ffffff",
+
+      zIndex:
+        "2147483647",
+
+      fontFamily:
+        "Arial, Helvetica, sans-serif",
+
+      display:
+        "flex",
+
+      flexDirection:
+        "column",
+
+      alignItems:
+        "center",
+
+      justifyContent:
+        "center",
+
+      pointerEvents:
+        "none"
+
+    }
+  );
+
+
+  document.documentElement
+    .appendChild(painel);
+
+  painelAtual = painel;
 }
 
 
 // ============================================================
-// SOME AO CLICAR NOS BOTÕES
+// BUSCA STATUS
 // ============================================================
 
-function observarCliques() {
+function consultarStatus() {
 
-  document.addEventListener(
-    "click",
-    function(evento) {
+  if (!estaNaTelaInicial()) {
 
-      const elemento = evento.target;
+    removerAviso();
 
-      if (!elemento) {
+    cargaAnterior = null;
+    descargaAnterior = null;
+
+    return;
+  }
+
+
+  if (ocultadoPeloClique) {
+
+    removerAviso();
+
+    return;
+  }
+
+
+  chrome.runtime.sendMessage(
+    {
+      tipo: "BUSCAR_STATUS"
+    },
+    (resposta) => {
+
+      if (
+        chrome.runtime.lastError
+      ) {
+
+        console.error(
+          "Erro extensão:",
+          chrome.runtime.lastError
+        );
+
         return;
       }
 
-      const texto =
-        (elemento.innerText || "")
-          .trim()
-          .toUpperCase();
-
 
       if (
-        texto.includes("COMEÇAR ATENDIMENTO") ||
-        texto.includes("CADASTRAR BIOMETRIA FACIAL")
+        !resposta ||
+        !resposta.sucesso
       ) {
 
-        removerAviso();
+        console.error(
+          "Não foi possível obter o status.",
+          resposta
+        );
 
+        return;
       }
 
-    },
-    true
-  );
 
+      const dados =
+        resposta.dados;
+
+
+      const cargaAberta =
+        dados.carga_aberta !== false;
+
+
+      const descargaAberta =
+        dados.descarga_aberta !== false;
+
+
+      cargaAnterior =
+        cargaAberta;
+
+      descargaAnterior =
+        descargaAberta;
+
+
+      criarAviso(
+        cargaAberta,
+        descargaAberta,
+        dados.data_referencia
+      );
+
+    }
+  );
 }
 
 
 // ============================================================
-// DETECTA MUDANÇAS INTERNAS DA PÁGINA
+// DETECTA CLIQUE NOS BOTÕES
 // ============================================================
 
-let urlAnterior = window.location.href;
+document.addEventListener(
+  "click",
+  (evento) => {
 
-function monitorarNavegacao() {
+    let elemento =
+      evento.target;
 
-  const urlAtual = window.location.href;
 
-  if (urlAtual !== urlAnterior) {
+    if (!elemento) {
+      return;
+    }
 
-    urlAnterior = urlAtual;
 
-    if (!estaNaTelaInicial()) {
+    let texto =
+      (
+        elemento.innerText ||
+        elemento.textContent ||
+        ""
+      )
+      .trim()
+      .toUpperCase();
+
+
+    // Procura também elementos pais.
+    let pai = elemento.parentElement;
+
+    for (
+      let i = 0;
+      i < 4 && pai;
+      i++
+    ) {
+
+      texto +=
+        " " +
+        (
+          pai.innerText ||
+          pai.textContent ||
+          ""
+        )
+        .trim()
+        .toUpperCase();
+
+      pai =
+        pai.parentElement;
+
+    }
+
+
+    if (
+      texto.includes(
+        "COMEÇAR ATENDIMENTO"
+      ) ||
+      texto.includes(
+        "CADASTRAR BIOMETRIA FACIAL"
+      )
+    ) {
+
+      ocultadoPeloClique = true;
 
       removerAviso();
 
-    } else {
+    }
 
-      ultimaCarga = null;
-      ultimaDescarga = null;
+  },
+  true
+);
 
-      setTimeout(
-        consultarStatus,
-        500
-      );
+
+// ============================================================
+// DETECTA ALTERAÇÃO DA TELA
+// ============================================================
+
+let estavaNaTelaInicial =
+  estaNaTelaInicial();
+
+
+function verificarTela() {
+
+  const agoraNaTelaInicial =
+    estaNaTelaInicial();
+
+
+  // Saiu da tela inicial.
+  if (
+    estavaNaTelaInicial &&
+    !agoraNaTelaInicial
+  ) {
+
+    removerAviso();
+
+  }
+
+
+  // Voltou para a tela inicial.
+  if (
+    !estavaNaTelaInicial &&
+    agoraNaTelaInicial
+  ) {
+
+    ocultadoPeloClique =
+      false;
+
+    cargaAnterior = null;
+    descargaAnterior = null;
+
+    setTimeout(
+      consultarStatus,
+      300
+    );
+
+  }
+
+
+  estavaNaTelaInicial =
+    agoraNaTelaInicial;
+}
+
+
+// ============================================================
+// SE O ATENDIMENTO ABRIR OUTRA ABA
+// ============================================================
+
+document.addEventListener(
+  "visibilitychange",
+  () => {
+
+    // Cliente voltou para o totem.
+    if (
+      document.visibilityState ===
+      "visible"
+    ) {
+
+      if (
+        estaNaTelaInicial()
+      ) {
+
+        ocultadoPeloClique =
+          false;
+
+        setTimeout(
+          consultarStatus,
+          300
+        );
+
+      }
 
     }
 
   }
-
-}
+);
 
 
 // ============================================================
-// INICIALIZAÇÃO
+// INICIALIZA
 // ============================================================
 
-observarCliques();
+console.log(
+  "STANG FILAS - EXTENSÃO INICIADA"
+);
 
-consultarStatus();
+
+setTimeout(
+  consultarStatus,
+  500
+);
 
 
-// Consulta GitHub a cada 3 segundos.
+// Consulta status periodicamente.
 setInterval(
   consultarStatus,
   3000
 );
 
 
-// Verifica se mudou de página.
+// Detecta mudança das telas.
 setInterval(
-  monitorarNavegacao,
+  verificarTela,
   500
 );
