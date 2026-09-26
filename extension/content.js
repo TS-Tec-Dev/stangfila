@@ -408,7 +408,9 @@ let estavaInicio =
 
 
 setInterval(
-  function() {
+  consultar,
+  3000
+);
 
     const agoraInicio =
       estaNaTelaInicial();
