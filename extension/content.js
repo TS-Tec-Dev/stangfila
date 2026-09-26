@@ -216,8 +216,8 @@ function mostrarAviso(dados) {
       text-align:center;
       color:#ffffff;
     ">
-      PROCURE A PORTARIA<br>
-      PARA MAIS INFORMAÇÕES
+      PROCURE A SUA DISTRIBUIDORA<br>
+      PARA REAGENDAMENTO!
     </div>
 
   `;
