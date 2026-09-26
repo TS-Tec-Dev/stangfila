@@ -1,78 +1,121 @@
-const API_URL =
-  "https://api.github.com/repos/TS-Tec-Dev/stangfila/contents/status.json?ref=main";
+const STATUS_URL =
+  "https://raw.githubusercontent.com/TS-Tec-Dev/stangfila/main/status.json";
+
+
+// ============================================================
+// RECEBE PEDIDO DO CONTENT.JS
+// ============================================================
 
 chrome.runtime.onMessage.addListener(
-  (mensagem, sender, sendResponse) => {
+  function (mensagem, sender, sendResponse) {
 
-    if (mensagem.tipo !== "BUSCAR_STATUS") {
+    if (
+      !mensagem ||
+      mensagem.tipo !== "BUSCAR_STATUS"
+    ) {
       return;
     }
 
+
     buscarStatus()
-      .then((dados) => {
+      .then(function (dados) {
+
+        console.log(
+          "STANG FILAS - STATUS RECEBIDO:",
+          dados
+        );
+
         sendResponse({
           sucesso: true,
           dados: dados
         });
+
       })
-      .catch((erro) => {
-        console.error("STANG FILAS:", erro);
+      .catch(function (erro) {
+
+        console.error(
+          "STANG FILAS - ERRO:",
+          erro
+        );
 
         sendResponse({
           sucesso: false,
           erro: String(erro)
         });
+
       });
 
+
+    // Mantém o canal aberto para resposta assíncrona.
     return true;
   }
 );
 
 
+// ============================================================
+// BUSCA O STATUS.JSON
+// ============================================================
+
 async function buscarStatus() {
 
-  const resposta = await fetch(
-    API_URL + "&t=" + Date.now(),
-    {
-      method: "GET",
-      cache: "no-store",
-      headers: {
-        "Accept": "application/vnd.github+json"
+  // Timestamp evita usar cópia antiga em cache.
+  const url =
+    STATUS_URL +
+    "?nocache=" +
+    Date.now();
+
+
+  const resposta =
+    await fetch(
+      url,
+      {
+        method: "GET",
+
+        cache: "no-store",
+
+        headers: {
+          "Cache-Control": "no-cache"
+        }
       }
-    }
-  );
+    );
+
 
   if (!resposta.ok) {
+
     throw new Error(
-      "GitHub respondeu HTTP " +
+      "Erro ao consultar status.json. HTTP " +
       resposta.status
     );
+
   }
 
-  const arquivo = await resposta.json();
-
-  if (!arquivo.content) {
-    throw new Error(
-      "status.json sem conteúdo"
-    );
-  }
-
-  // O GitHub devolve o arquivo em Base64.
-  const base64 =
-    arquivo.content.replace(/\n/g, "");
 
   const texto =
-    decodeURIComponent(
-      escape(atob(base64))
-    );
+    await resposta.text();
+
+
+  console.log(
+    "STANG FILAS - JSON RECEBIDO:",
+    texto
+  );
+
 
   const dados =
     JSON.parse(texto);
 
-  console.log(
-    "STANG FILAS - STATUS RECEBIDO:",
-    dados
-  );
+
+  // Validação básica.
+  if (
+    typeof dados.carga_aberta !== "boolean" ||
+    typeof dados.descarga_aberta !== "boolean"
+  ) {
+
+    throw new Error(
+      "status.json recebido em formato inválido."
+    );
+
+  }
+
 
   return dados;
 }
