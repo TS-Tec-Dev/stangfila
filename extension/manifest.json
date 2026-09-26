@@ -1,16 +1,25 @@
 {
   "manifest_version": 3,
-  "name": "Aviso de Filas - Totem Sispetro",
+
+  "name": "Stang - Controle de Filas do Totem",
+
   "version": "1.0.0",
-  "description": "Mostra aviso lateral de fila de carga/descarga encerrada na tela inicial do totem.",
+
+  "description": "Exibe no totem o status das filas de carga e descarga.",
+
   "content_scripts": [
     {
-      "matches": ["https://app.sispetro.com.br/*"],
-      "js": ["content.js"],
+      "matches": [
+        "https://app.sispetro.com.br/*"
+      ],
+      "js": [
+        "content.js"
+      ],
       "run_at": "document_idle"
     }
   ],
+
   "host_permissions": [
-    "https://SEU-PROJETO.supabase.co/*"
+    "https://raw.githubusercontent.com/*"
   ]
 }
