@@ -1,7 +1,7 @@
 {
-  "carga_aberta": false,
-  "descarga_aberta": false,
+  "carga_aberta": true,
+  "descarga_aberta": true,
   "data_referencia": "2026-09-28",
-  "atualizado_em": "2026-09-28T15:36:40.232271-03:00",
+  "atualizado_em": "2026-09-28T15:36:54.886183-03:00",
   "atualizado_por": "PORTARIA"
 }
