@@ -3,7 +3,7 @@ let ocultadoTemporariamente = false;
 
 
 // ============================================================
-// DETECTA SE ESTÁ NA TELA INICIAL DO SISPetro
+// DETECTA A TELA INICIAL PELO CONTEÚDO
 // ============================================================
 
 function estaNaTelaInicial() {
@@ -12,31 +12,24 @@ function estaNaTelaInicial() {
     (document.body?.innerText || "")
       .toUpperCase();
 
-  const temInicio =
-    texto.includes("INÍCIO");
-
-  const temAtendimento =
-    texto.includes("COMEÇAR ATENDIMENTO");
-
-  const temBiometria =
-    texto.includes("CADASTRAR BIOMETRIA FACIAL");
-
   return (
-    temInicio &&
-    temAtendimento &&
-    temBiometria
+    texto.includes("INÍCIO") &&
+    texto.includes("COMEÇAR ATENDIMENTO") &&
+    texto.includes("CADASTRAR BIOMETRIA FACIAL")
   );
 }
 
 
 // ============================================================
-// REMOVE O AVISO DA TELA
+// REMOVE AVISO
 // ============================================================
 
 function removerAviso() {
 
   const existente =
-    document.getElementById("stang-aviso-fila");
+    document.getElementById(
+      "stang-aviso-fila"
+    );
 
   if (existente) {
     existente.remove();
@@ -47,7 +40,7 @@ function removerAviso() {
 
 
 // ============================================================
-// FORMATA DATA YYYY-MM-DD PARA DD/MM/YYYY
+// DATA
 // ============================================================
 
 function formatarData(data) {
@@ -75,7 +68,7 @@ function formatarData(data) {
 
 
 // ============================================================
-// MONTA O PAINEL DE AVISO
+// EXIBE AVISO
 // ============================================================
 
 function mostrarAviso(dados) {
@@ -90,7 +83,6 @@ function mostrarAviso(dados) {
     dados.descarga_aberta !== false;
 
 
-  // Se as duas filas estiverem abertas, não mostra nada.
   if (
     cargaAberta &&
     descargaAberta
@@ -99,9 +91,9 @@ function mostrarAviso(dados) {
   }
 
 
-  let titulo = "";
-  let fila = "";
-  let mensagem = "";
+  let titulo;
+  let fila;
+  let mensagem;
 
 
   if (
@@ -133,7 +125,7 @@ function mostrarAviso(dados) {
 
   }
 
-  else if (!descargaAberta) {
+  else {
 
     titulo =
       "ATENÇÃO";
@@ -150,7 +142,6 @@ function mostrarAviso(dados) {
   const painel =
     document.createElement("div");
 
-
   painel.id =
     "stang-aviso-fila";
 
@@ -158,66 +149,62 @@ function mostrarAviso(dados) {
   painel.innerHTML = `
 
     <div style="
-      font-size:56px;
-      margin-bottom:12px;
-      line-height:1;
+      font-size:60px;
+      margin-bottom:10px;
     ">
       ⛔
     </div>
 
     <div style="
-      font-size:20px;
+      font-size:22px;
       font-weight:900;
-      margin-bottom:16px;
+      margin-bottom:18px;
       text-align:center;
-      color:#ffffff;
     ">
       ${titulo}
     </div>
 
     <div style="
-      font-size:24px;
-      font-weight:900;
-      line-height:1.2;
-      text-align:center;
+      font-size:25px;
       color:#ffeb3b;
+      font-weight:900;
+      text-align:center;
+      line-height:1.25;
       margin-bottom:18px;
     ">
       ${fila}
     </div>
 
     <div style="
-      font-size:20px;
-      font-weight:800;
-      text-align:center;
-      color:#ffffff;
-      margin-bottom:18px;
+      font-size:22px;
+      font-weight:bold;
+      margin-bottom:20px;
     ">
-      ${formatarData(dados.data_referencia)}
+      ${formatarData(
+        dados.data_referencia
+      )}
     </div>
 
     <div style="
-      font-size:15px;
-      line-height:1.45;
+      font-size:16px;
+      line-height:1.5;
       text-align:center;
-      color:#ffffff;
     ">
       ${mensagem}
     </div>
 
     <div style="
-      width:85%;
-      margin-top:22px;
-      padding-top:16px;
-      border-top:1px solid rgba(255,255,255,0.40);
-      font-size:14px;
-      line-height:1.4;
-      font-weight:800;
+      margin-top:25px;
+      padding-top:18px;
+      border-top:
+        1px solid rgba(255,255,255,.45);
+      font-size:15px;
+      font-weight:bold;
       text-align:center;
-      color:#ffffff;
+      line-height:1.4;
     ">
-      PROCURE A SUA DISTRIBUIDORA<br>
-      PARA REAGENDAMENTO!
+      PROCURE A PORTARIA<br>
+      PARA MAIS INFORMAÇÕES
     </div>
 
   `;
@@ -229,59 +216,49 @@ function mostrarAviso(dados) {
 
       position: "fixed",
 
-      left: "0px",
+      left: "20px",
 
       top: "50%",
 
       transform:
         "translateY(-50%)",
 
-      width: "320px",
+      width: "310px",
 
-      minHeight: "390px",
+      minHeight: "410px",
+
+      padding: "28px 22px",
 
       boxSizing: "border-box",
 
-      padding: "28px 20px",
-
       background:
-        "linear-gradient(160deg,#d32f2f 0%,#8b0000 100%)",
+        "linear-gradient(160deg,#c62828,#7f0000)",
 
       border:
         "3px solid #ff5252",
 
-      borderLeft:
-        "none",
-
       borderRadius:
-        "0 18px 18px 0",
+        "18px",
 
       boxShadow:
-        "0 12px 35px rgba(0,0,0,0.70)",
+        "0 15px 40px rgba(0,0,0,.75)",
 
-      color:
-        "#ffffff",
+      color: "#fff",
 
-      zIndex:
-        "2147483647",
+      zIndex: "2147483647",
 
       fontFamily:
         "Arial, Helvetica, sans-serif",
 
-      display:
-        "flex",
+      display: "flex",
 
-      flexDirection:
-        "column",
+      flexDirection: "column",
 
-      justifyContent:
-        "center",
+      justifyContent: "center",
 
-      alignItems:
-        "center",
+      alignItems: "center",
 
-      pointerEvents:
-        "none"
+      pointerEvents: "none"
 
     }
   );
@@ -290,21 +267,20 @@ function mostrarAviso(dados) {
   document.documentElement
     .appendChild(painel);
 
-
   aviso = painel;
 }
 
 
 // ============================================================
-// CONSULTA O BACKGROUND.JS
+// CONSULTA BACKGROUND
 // ============================================================
 
-function consultarStatus() {
+function consultar() {
 
-  // Se não estiver na tela inicial, não mostra nada.
   if (!estaNaTelaInicial()) {
 
-    ocultadoTemporariamente = false;
+    ocultadoTemporariamente =
+      false;
 
     removerAviso();
 
@@ -312,13 +288,13 @@ function consultarStatus() {
   }
 
 
-  // Se o cliente acabou de clicar em atendimento/biometria,
-  // mantém escondido enquanto a tela ainda não mudou.
-  if (ocultadoTemporariamente) {
+  if (
+    ocultadoTemporariamente
+  ) {
 
     removerAviso();
-
     return;
+
   }
 
 
@@ -328,50 +304,20 @@ function consultarStatus() {
       {
         tipo: "BUSCAR_STATUS"
       },
-
       function(resposta) {
 
-        if (chrome.runtime.lastError) {
-
-          const erro =
-            chrome.runtime.lastError.message || "";
-
-          if (
-            erro.includes(
-              "Extension context invalidated"
-            )
-          ) {
-            return;
-          }
-
-          console.warn(
-            "STANG FILAS - erro:",
-            erro
-          );
-
+        if (
+          chrome.runtime.lastError
+        ) {
           return;
         }
-
 
         if (
           !resposta ||
           !resposta.sucesso
         ) {
-
-          console.warn(
-            "STANG FILAS - status não recebido.",
-            resposta
-          );
-
           return;
         }
-
-
-        console.log(
-          "STANG FILAS - STATUS:",
-          resposta.dados
-        );
-
 
         mostrarAviso(
           resposta.dados
@@ -380,34 +326,21 @@ function consultarStatus() {
       }
     );
 
-  }
+  } catch (e) {
 
-  catch (erro) {
-
-    if (
-      String(erro).includes(
-        "Extension context invalidated"
-      )
-    ) {
-      return;
-    }
-
-    console.warn(
-      "STANG FILAS:",
-      erro
-    );
+    // extensão foi recarregada;
+    // a nova aba assumirá o controle.
 
   }
 }
 
 
 // ============================================================
-// DETECTA CLIQUE EM COMEÇAR ATENDIMENTO / BIOMETRIA
+// CLIQUES
 // ============================================================
 
 document.addEventListener(
   "click",
-
   function(evento) {
 
     let elemento =
@@ -420,14 +353,11 @@ document.addEventListener(
 
     let texto = "";
 
-    let atual =
-      elemento;
+    let atual = elemento;
 
-
-    // Procura o texto no elemento e também nos pais.
     for (
       let i = 0;
-      i < 6 && atual;
+      i < 5 && atual;
       i++
     ) {
 
@@ -445,9 +375,7 @@ document.addEventListener(
 
 
     texto =
-      texto
-        .trim()
-        .toUpperCase();
+      texto.toUpperCase();
 
 
     if (
@@ -467,65 +395,62 @@ document.addEventListener(
     }
 
   },
-
   true
 );
 
 
 // ============================================================
-// DETECTA SE SAIU OU VOLTOU PARA A TELA INICIAL
+// DETECTA QUANDO VOLTA PARA INÍCIO
 // ============================================================
 
-let estavaNaTelaInicial =
+let estavaInicio =
   estaNaTelaInicial();
 
 
-function verificarTela() {
+setInterval(
+  function() {
 
-  const agoraNaTelaInicial =
-    estaNaTelaInicial();
-
-
-  // Saiu da tela inicial.
-  if (
-    estavaNaTelaInicial &&
-    !agoraNaTelaInicial
-  ) {
-
-    removerAviso();
-
-  }
+    const agoraInicio =
+      estaNaTelaInicial();
 
 
-  // Voltou para a tela inicial.
-  if (
-    !estavaNaTelaInicial &&
-    agoraNaTelaInicial
-  ) {
+    if (
+      agoraInicio &&
+      !estavaInicio
+    ) {
 
-    ocultadoTemporariamente =
-      false;
+      ocultadoTemporariamente =
+        false;
 
-    setTimeout(
-      consultarStatus,
-      500
-    );
+      setTimeout(
+        consultar,
+        300
+      );
 
-  }
+    }
 
 
-  estavaNaTelaInicial =
-    agoraNaTelaInicial;
-}
+    if (!agoraInicio) {
+
+      removerAviso();
+
+    }
+
+
+    estavaInicio =
+      agoraInicio;
+
+  },
+  500
+);
 
 
 // ============================================================
-// QUANDO O CLIENTE VOLTAR PARA A ABA DO TOTEM
+// ABA VOLTOU A FICAR VISÍVEL
 // ============================================================
 
 document.addEventListener(
   "visibilitychange",
-
   function() {
 
     if (
@@ -538,8 +463,8 @@ document.addEventListener(
         false;
 
       setTimeout(
-        consultarStatus,
-        500
+        consultar,
+        300
       );
 
     }
@@ -549,94 +474,21 @@ document.addEventListener(
 
 
 // ============================================================
-// INICIALIZAÇÃO
+// INÍCIO
 // ============================================================
 
 console.log(
-  "STANG FILAS - CONTENT 1.3.0 INICIADO"
+  "STANG FILAS 1.2.0 ATIVA"
 );
 
 
-// Primeira consulta.
 setTimeout(
-  consultarStatus,
+  consultar,
   700
 );
 
 
-// Atualiza o status a cada 10 segundos.
-const intervaloStatus =
-  setInterval(
-    function() {
-
-      try {
-
-        if (
-          typeof chrome === "undefined" ||
-          !chrome.runtime ||
-          !chrome.runtime.id
-        ) {
-
-          clearInterval(
-            intervaloStatus
-          );
-
-          return;
-        }
-
-
-        consultarStatus();
-
-      }
-
-      catch (erro) {
-
-        clearInterval(
-          intervaloStatus
-        );
-
-      }
-
-    },
-
-    10000
-  );
-
-
-// Monitora mudança da tela a cada meio segundo.
-const intervaloTela =
-  setInterval(
-    function() {
-
-      try {
-
-        if (
-          typeof chrome === "undefined" ||
-          !chrome.runtime ||
-          !chrome.runtime.id
-        ) {
-
-          clearInterval(
-            intervaloTela
-          );
-
-          return;
-        }
-
-
-        verificarTela();
-
-      }
-
-      catch (erro) {
-
-        clearInterval(
-          intervaloTela
-        );
-
-      }
-
-    },
-
-    500
-  );
+setInterval(
+  consultar,
+  3000
+);
