@@ -138,5 +138,15 @@
     "carga": "ENCERRADA",
     "descarga": "ENCERRADA",
     "observacao": ""
+  },
+  {
+    "data_hora": "2026-09-28T20:06:18.364432-03:00",
+    "data": "28/09/2026",
+    "hora": "20:06:18",
+    "funcionario": "MARCOS RAMOS",
+    "acao": "REABRIU CARGA",
+    "carga": "ABERTA",
+    "descarga": "ENCERRADA",
+    "observacao": ""
   }
 ]
