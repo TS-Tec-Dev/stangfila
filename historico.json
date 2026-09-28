@@ -158,5 +158,15 @@
     "carga": "ABERTA",
     "descarga": "ABERTA",
     "observacao": ""
+  },
+  {
+    "data_hora": "2026-09-28T20:07:31.385573-03:00",
+    "data": "28/09/2026",
+    "hora": "20:07:31",
+    "funcionario": "MARCOS RAMOS",
+    "acao": "ENCERROU DESCARGA",
+    "carga": "ABERTA",
+    "descarga": "ENCERRADA",
+    "observacao": ""
   }
 ]
