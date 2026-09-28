@@ -1,0 +1,33 @@
+{
+  "manifest_version": 3,
+  "name": "Stang - Controle de Filas do Totem",
+  "version": "2.0.0",
+  "description": "Exibe no totem o status das filas de carga e descarga.",
+  "permissions": [
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://app.sispetro.com.br/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "host_permissions": [
+    "https://api.github.com/*"
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "action": {
+    "default_title": "Stang - Controle de Filas"
+  }
+}

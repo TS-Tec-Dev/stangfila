@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Configurar Controle de Filas</title>
+  <style>
+    body {font-family: Arial, sans-serif; max-width: 760px; margin: 40px auto; padding: 0 20px; background:#111318; color:#fff;}
+    h1 {margin-bottom: 8px;}
+    p {color:#c7cbd3; line-height:1.5;}
+    label {display:block; margin-top:18px; margin-bottom:6px; font-weight:700;}
+    input {width:100%; box-sizing:border-box; padding:12px; border-radius:8px; border:1px solid #454b57; background:#20232b; color:#fff;}
+    .linha {display:grid; grid-template-columns:1fr 1fr 1fr; gap:12px;}
+    button {margin-top:20px; padding:12px 18px; border:0; border-radius:8px; cursor:pointer; font-weight:800;}
+    #salvar {background:#15a65b; color:#fff;}
+    #testar {background:#333a49; color:#fff; margin-left:8px;}
+    #msg {margin-top:18px; padding:12px; border-radius:8px; display:none; white-space:pre-wrap;}
+    .ok {display:block!important; background:#103d28; border:1px solid #1cc76a;}
+    .erro {display:block!important; background:#4b1e24; border:1px solid #ff5964;}
+    .nota {font-size:13px; color:#aeb4bf; margin-top:10px;}
+  </style>
+</head>
+<body>
+  <h1>🚛 Controle de Filas - Configuração</h1>
+  <p>Use um token GitHub <strong>somente leitura</strong> para o repositório <strong>stangfila</strong>. O token fica salvo apenas neste Chrome.</p>
+
+  <label for="token">Token GitHub (Contents: Read-only)</label>
+  <input id="token" type="password" autocomplete="off" placeholder="github_pat_...">
+
+  <div class="linha">
+    <div>
+      <label for="owner">Owner</label>
+      <input id="owner" value="TS-Tec-Dev">
+    </div>
+    <div>
+      <label for="repo">Repositório</label>
+      <input id="repo" value="stangfila">
+    </div>
+    <div>
+      <label for="branch">Branch</label>
+      <input id="branch" value="main">
+    </div>
+  </div>
+
+  <button id="salvar">Salvar configuração</button>
+  <button id="testar">Testar conexão</button>
+
+  <div id="msg"></div>
+  <div class="nota">Não coloque o token no GitHub nem dentro do background.js. Configure-o somente nesta tela.</div>
+
+  <script src="options.js"></script>
+</body>
+</html>
