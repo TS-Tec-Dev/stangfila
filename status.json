@@ -1,11 +1,11 @@
 {
-  "carga_aberta": false,
+  "carga_aberta": true,
   "descarga_aberta": false,
   "data_referencia": "2026-09-28",
-  "atualizado_em": "2026-09-28T17:53:04.624700-03:00",
+  "atualizado_em": "2026-09-28T17:53:20.760693-03:00",
   "atualizado_por": "MARCOS RAMOS",
-  "carga_encerrada_por": "MARCOS RAMOS",
-  "carga_encerrada_em": "2026-09-28T17:53:04.624700-03:00",
+  "carga_encerrada_por": null,
+  "carga_encerrada_em": null,
   "descarga_encerrada_por": "MARCOS RAMOS",
   "descarga_encerrada_em": "2026-09-28T17:52:04.697127-03:00"
 }
