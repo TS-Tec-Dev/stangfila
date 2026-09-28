@@ -18,5 +18,15 @@
     "carga": "ABERTA",
     "descarga": "ABERTA",
     "observacao": ""
+  },
+  {
+    "data_hora": "2026-09-28T17:51:23.363800-03:00",
+    "data": "28/09/2026",
+    "hora": "17:51:23",
+    "funcionario": "BRUNO SANTOS",
+    "acao": "ENCERROU DESCARGA",
+    "carga": "ABERTA",
+    "descarga": "ENCERRADA",
+    "observacao": ""
   }
 ]
