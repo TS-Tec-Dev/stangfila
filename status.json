@@ -1,11 +1,11 @@
 {
   "carga_aberta": true,
-  "descarga_aberta": true,
+  "descarga_aberta": false,
   "data_referencia": "2026-09-28",
-  "atualizado_em": "2026-09-28T17:51:06.935594-03:00",
+  "atualizado_em": "2026-09-28T17:51:21.816913-03:00",
   "atualizado_por": "BRUNO SANTOS",
   "carga_encerrada_por": null,
   "carga_encerrada_em": null,
-  "descarga_encerrada_por": null,
-  "descarga_encerrada_em": null
+  "descarga_encerrada_por": "BRUNO SANTOS",
+  "descarga_encerrada_em": "2026-09-28T17:51:21.816913-03:00"
 }
