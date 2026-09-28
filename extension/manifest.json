@@ -1,10 +1,7 @@
 {
   "manifest_version": 3,
-
   "name": "Stang - Controle de Filas do Totem",
-
-  "version": "1.4.0",
-
+  "version": "1.2.0",
   "description": "Exibe no totem o status das filas de carga e descarga.",
 
   "background": {
