@@ -1,1 +1,12 @@
-[]
+[
+  {
+    "data_hora": "2026-09-28T17:47:52.061906-03:00",
+    "data": "28/09/2026",
+    "hora": "17:47:52",
+    "funcionario": "BRUNO SANTOS",
+    "acao": "ENCERROU DESCARGA",
+    "carga": "ABERTA",
+    "descarga": "ENCERRADA",
+    "observacao": ""
+  }
+]
