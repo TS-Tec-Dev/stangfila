@@ -248,5 +248,15 @@
     "carga": "ABERTA",
     "descarga": "ABERTA",
     "observacao": ""
+  },
+  {
+    "data_hora": "2026-09-29T15:17:38.708258-03:00",
+    "data": "29/09/2026",
+    "hora": "15:17:38",
+    "funcionario": "THIAGO SPANEMBERG",
+    "acao": "ENCERROU DESCARGA",
+    "carga": "ABERTA",
+    "descarga": "ENCERRADA",
+    "observacao": ""
   }
 ]
