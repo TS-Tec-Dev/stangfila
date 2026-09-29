@@ -1,11 +1,11 @@
 {
   "carga_aberta": true,
-  "descarga_aberta": false,
+  "descarga_aberta": true,
   "data_referencia": "2026-09-29",
-  "atualizado_em": "2026-09-29T15:17:37.348500-03:00",
+  "atualizado_em": "2026-09-29T15:18:08.407984-03:00",
   "atualizado_por": "THIAGO SPANEMBERG",
   "carga_encerrada_por": null,
   "carga_encerrada_em": null,
-  "descarga_encerrada_por": "THIAGO SPANEMBERG",
-  "descarga_encerrada_em": "2026-09-29T15:17:37.348500-03:00"
+  "descarga_encerrada_por": null,
+  "descarga_encerrada_em": null
 }
