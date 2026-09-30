@@ -1,11 +1,11 @@
 {
   "carga_aberta": true,
-  "descarga_aberta": false,
+  "descarga_aberta": true,
   "data_referencia": "2026-09-29",
-  "atualizado_em": "2026-09-29T19:35:17.002168-03:00",
-  "atualizado_por": "ALISSON FRAITAY",
+  "atualizado_em": "2026-09-29T23:56:36.349831-03:00",
+  "atualizado_por": "MARCOS RAMOS",
   "carga_encerrada_por": null,
   "carga_encerrada_em": null,
-  "descarga_encerrada_por": "ALISSON FRAITAY",
-  "descarga_encerrada_em": "2026-09-29T19:35:17.002168-03:00"
+  "descarga_encerrada_por": null,
+  "descarga_encerrada_em": null
 }
