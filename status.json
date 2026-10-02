@@ -1,11 +1,11 @@
 {
   "carga_aberta": true,
-  "descarga_aberta": false,
-  "data_referencia": "2026-10-01",
-  "atualizado_em": "2026-10-01T15:51:45.049977-03:00",
-  "atualizado_por": "BRUNO SANTOS",
+  "descarga_aberta": true,
+  "data_referencia": "2026-10-02",
+  "atualizado_em": "2026-10-02T00:00:06.850317-03:00",
+  "atualizado_por": "SISTEMA",
   "carga_encerrada_por": null,
   "carga_encerrada_em": null,
-  "descarga_encerrada_por": "BRUNO SANTOS",
-  "descarga_encerrada_em": "2026-10-01T15:51:45.049977-03:00"
+  "descarga_encerrada_por": null,
+  "descarga_encerrada_em": null
 }
