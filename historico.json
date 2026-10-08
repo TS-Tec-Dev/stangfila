@@ -468,5 +468,15 @@
     "carga": "ABERTA",
     "descarga": "ENCERRADA",
     "observacao": ""
+  },
+  {
+    "data_hora": "2026-10-08T00:00:30.109827-03:00",
+    "data": "08/10/2026",
+    "hora": "00:00:30",
+    "funcionario": "SISTEMA",
+    "acao": "ABERTURA AUTOMÁTICA DO DIA",
+    "carga": "ABERTA",
+    "descarga": "ABERTA",
+    "observacao": ""
   }
 ]
