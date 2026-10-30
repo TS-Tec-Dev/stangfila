@@ -918,5 +918,15 @@
     "carga": "ABERTA",
     "descarga": "ABERTA",
     "observacao": ""
+  },
+  {
+    "data_hora": "2026-10-29T21:12:05.127376-03:00",
+    "data": "29/10/2026",
+    "hora": "21:12:05",
+    "funcionario": "SISTEMA",
+    "acao": "ABERTURA AUTOMÁTICA DO DIA",
+    "carga": "ABERTA",
+    "descarga": "ABERTA",
+    "observacao": ""
   }
 ]
