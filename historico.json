@@ -958,5 +958,15 @@
     "carga": "ENCERRADA",
     "descarga": "ENCERRADA",
     "observacao": ""
+  },
+  {
+    "data_hora": "2026-11-02T09:27:29.651686-03:00",
+    "data": "02/11/2026",
+    "hora": "09:27:29",
+    "funcionario": "SISTEMA",
+    "acao": "ABERTURA AUTOMÁTICA DO DIA",
+    "carga": "ABERTA",
+    "descarga": "ABERTA",
+    "observacao": ""
   }
 ]
