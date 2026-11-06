@@ -1118,5 +1118,15 @@
     "carga": "ABERTA",
     "descarga": "ABERTA",
     "observacao": ""
+  },
+  {
+    "data_hora": "2026-11-06T14:41:47.857838-03:00",
+    "data": "06/11/2026",
+    "hora": "14:41:47",
+    "funcionario": "SISTEMA",
+    "acao": "ABERTURA AUTOMÁTICA DO DIA",
+    "carga": "ABERTA",
+    "descarga": "ABERTA",
+    "observacao": ""
   }
 ]
