@@ -1,11 +1,11 @@
 {
-  "carga_aberta": true,
+  "carga_aberta": false,
   "descarga_aberta": false,
   "data_referencia": "2026-11-07",
-  "atualizado_em": "2026-11-07T13:10:00.070681-03:00",
+  "atualizado_em": "2026-11-07T14:01:06.164919-03:00",
   "atualizado_por": "ALISSON FRAITAY",
-  "carga_encerrada_por": null,
-  "carga_encerrada_em": null,
+  "carga_encerrada_por": "ALISSON FRAITAY",
+  "carga_encerrada_em": "2026-11-07T14:01:06.164919-03:00",
   "descarga_encerrada_por": "ALISSON FRAITAY",
   "descarga_encerrada_em": "2026-11-07T13:10:00.070681-03:00"
 }
