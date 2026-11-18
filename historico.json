@@ -1348,5 +1348,15 @@
     "carga": "ABERTA",
     "descarga": "ABERTA",
     "observacao": ""
+  },
+  {
+    "data_hora": "2026-11-17T21:58:23.962481-03:00",
+    "data": "17/11/2026",
+    "hora": "21:58:23",
+    "funcionario": "ALISSON FRAITAY",
+    "acao": "ENCERROU DESCARGA",
+    "carga": "ABERTA",
+    "descarga": "ENCERRADA",
+    "observacao": ""
   }
 ]
